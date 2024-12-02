@@ -10,6 +10,8 @@ echo "window.econumoConfig = {
 }" > /usr/share/nginx/html/econumo-config.js
 
 chown -R www-data:www-data /var/www/ /usr/share/nginx/html/
+su -s /bin/sh www-data -c "cd /var/www && php bin/console doctrine:database:create -q"
 su -s /bin/sh www-data -c "cd /var/www && php bin/console doctrine:migrations:migrate --quiet --no-interaction --allow-no-migration"
+su -s /bin/sh www-data -c "cd /var/www && php bin/console cache:warmup"
 
 /usr/bin/supervisord -n -c /etc/supervisord.conf
