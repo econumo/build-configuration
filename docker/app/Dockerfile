@@ -35,3 +35,6 @@ RUN composer clear-cache && \
     rm /var/www/.env.*
 
 COPY /frontend/dist /usr/share/nginx/html
+
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
