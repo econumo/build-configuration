@@ -9,11 +9,6 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 WORKDIR /var/www/
 RUN apk add --update nginx supervisor busybox-suid postgresql-libs
 
-RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
-
-COPY backend/build/docker/app/configs /
-COPY build/docker/app/configs /
-
 RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS curl-dev postgresql-dev && \
     docker-php-ext-configure bcmath --enable-bcmath && \
     docker-php-ext-configure opcache --enable-opcache && \
@@ -22,6 +17,11 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS curl-dev postgresql-de
     docker-php-ext-enable pdo_pgsql pgsql && \
     apk del -f .build-deps && \
     rm -rf /tmp/* /var/cache/apk/*
+
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+
+COPY backend/build/docker/app/configs /
+COPY build/docker/app/configs /
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 COPY backend/composer.json backend/composer.lock backend/symfony.lock /var/www/
