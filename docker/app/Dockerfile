@@ -9,7 +9,7 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 WORKDIR /var/www/
 RUN apk add --update --no-scripts nginx busybox-suid supervisor postgresql-dev
 
-RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS curl-dev && \
+RUN apk add --no-cache --no-scripts --virtual .build-deps $PHPIZE_DEPS curl-dev && \
     docker-php-ext-configure bcmath --enable-bcmath && \
     docker-php-ext-configure opcache --enable-opcache && \
     docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql && \
