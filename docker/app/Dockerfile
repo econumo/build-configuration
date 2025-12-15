@@ -14,7 +14,7 @@ RUN apk add --no-cache --no-scripts --virtual .build-deps $PHPIZE_DEPS curl-dev 
     docker-php-ext-configure opcache --enable-opcache && \
     docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql && \
     docker-php-ext-install -j$(nproc) bcmath opcache curl pdo_pgsql pgsql && \
-    apk del -f .build-deps && \
+    apk del -f --no-scripts .build-deps && \
     rm -rf /tmp/* /var/cache/apk/*
 
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
