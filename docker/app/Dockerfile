@@ -7,7 +7,7 @@ ENV PHP_ERROR_REPORTING=22527
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
 WORKDIR /var/www/
-RUN apk add --update nginx busybox-suid supervisor postgresql-dev
+RUN apk add --update nginx git busybox-suid supervisor postgresql-dev
 
 RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS curl-dev && \
     docker-php-ext-configure bcmath --enable-bcmath && \
